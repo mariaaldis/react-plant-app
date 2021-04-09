@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 import './CreateRecipe.scss';
 import Button from '../../Components/Button/Button';
@@ -20,7 +21,6 @@ const CreateRecipe = () => {
 
     const onAddIngredient =   (event) => {
         event.preventDefault();
-
         const key = new Date().getTime();
 
         setFormData({ 
@@ -58,8 +58,8 @@ const CreateRecipe = () => {
         });
     }
 
-    const onRemoveStep = (id) => {
-        const updatedSteps = formData.instructions.filter(instruction => instruction.id !== id);
+    const onRemoveStep = (selectedId) => {
+        const updatedSteps = formData.instructions.filter(instruction => instruction.id !== selectedId);
         setFormData({ 
             ...formData, 
             instructions: [ ...updatedSteps ] 
@@ -67,7 +67,6 @@ const CreateRecipe = () => {
     }
 
     const onInputArrayChange = (event, value, inputChanged) => {
-        
         let inputValue = event.target.value;
 
         switch(inputChanged) {
@@ -105,6 +104,15 @@ const CreateRecipe = () => {
                 console.log('Empty action received.');
                 break;
         } 
+    }
+
+    const onSubmit = (event, formData) => {
+        event.preventDefault();
+
+        axios.post('https://recipe-app-341cf.firebaseio.com/recipes.json', formData)
+            .then(response => {
+                console.log(response);
+            });
     }
 
     return (
@@ -239,10 +247,7 @@ const CreateRecipe = () => {
                 Add a Step
             </Button>
 
-            <Button type="submit" click={(event) => {
-                event.preventDefault();
-                console.log(formData);
-                }} btnStyle="submit-button button">Create Recipe</Button>
+            <Button type="submit" click={(event) => onSubmit(event, formData)} btnStyle="submit-button button">Create Recipe</Button>
         </form>
     </div>
     );
