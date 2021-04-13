@@ -13,7 +13,8 @@ const Input = (props) => {
                                     placeholder={props.placeholder}
                                     label={props.label}
                                     id={props.id}
-                                    onChange={props.change}/>
+                                    onChange={props.change}
+                                    />
             break;
         case 'INPUT_RADIO':
                 inputElement = <input type="radio" 
@@ -41,6 +42,7 @@ const Input = (props) => {
             <React.Fragment>
                 {props.label ? <label htmlFor={props.id}>{props.label}</label> : null}
                 {inputElement}
+                {!props.valid? <p>ERROR</p> : null}
             </React.Fragment>
         }
             
