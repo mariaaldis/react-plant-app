@@ -2,9 +2,9 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
+import Nav from './Components/Nav/Nav';
 import './App.scss';
 
 import CreateRecipe from './Pages/CreateRecipe/CreateRecipe';
@@ -20,6 +20,7 @@ function App() {
           <Route path="/" exact component={Dashboard}></Route>
           <Route path="/create-recipe" component={CreateRecipe}></Route>
         </Switch>
+        <Nav/>
       </Router>
      
     </div>
