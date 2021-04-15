@@ -17,6 +17,14 @@ button {
         box-shadow: $box-shadow;
         background: darken($main-color, 2%);
     }
+    &:disabled {
+        background-color: lighten($main-color, 10%);
+        cursor: auto;
+        &:hover {
+            box-shadow: none;
+            background-color: lighten($main-color, 10%);
+        }
+    }
 }
 
 .border-button {

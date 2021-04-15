@@ -5,15 +5,20 @@ import './Input.scss';
 const Input = (props) => {
     
     let inputElement = null;
+    const inputClasses = [];
+
+    if (!props.valid && props.touched) {
+        inputClasses.push('invalid');
+    }
 
     switch(props.elementType) {
         case 'INPUT_TEXT':
                 inputElement = <input type="text" 
-                                    className="inputText" 
+                                    className={inputClasses.join(' ')} 
                                     placeholder={props.placeholder}
                                     label={props.label}
                                     id={props.id}
-                                    onChange={props.change}/>
+                                    onChange={props.change} />
             break;
         case 'INPUT_RADIO':
                 inputElement = <input type="radio" 
@@ -25,6 +30,7 @@ const Input = (props) => {
         case 'TEXTAREA':
                 inputElement = <textarea className="inputText" 
                                     placeholder={props.placeholder} 
+                                    className={inputClasses.join(' ')} 
                                     id={props.id}
                                     onChange={props.change}>
                                 </textarea>
@@ -42,8 +48,7 @@ const Input = (props) => {
                 {props.label ? <label htmlFor={props.id}>{props.label}</label> : null}
                 {inputElement}
             </React.Fragment>
-        }
-            
+            }
         </React.Fragment>
       
        
