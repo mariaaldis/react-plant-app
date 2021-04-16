@@ -322,7 +322,34 @@ const CreateRecipe = () => {
     const onSubmit = (event, formData) => {
         event.preventDefault();
 
-        axios.post('https://recipe-app-341cf.firebaseio.com/recipes.json', formData)
+        let ingredients = formData.ingredients.map((ingredient) => {
+            return { 
+                id: ingredient.id, 
+                ingredient: ingredient.ingredient.value, 
+                amount: ingredient.amount.value 
+            }
+        });
+
+        let instructions = formData.instructions.map((instruction) => {
+            return {
+                id: instruction.id,
+                step: instruction.step.value
+            }
+        });
+
+        let recipe = {
+            recipeName: formData.recipeName.value,
+            description: formData.description.value,
+            imageUrl: formData.imageUrl.value,
+            mealType: formData.mealType.value,
+            difficulty: formData.difficulty.value,
+            servings: formData.servings.value,
+            preparation: formData.preparation.value,
+            ingredients: ingredients,
+            instructions: instructions
+        };
+
+        axios.post('https://recipe-app-341cf.firebaseio.com/recipes.json', recipe)
             .then(response => {
                 console.log(response);
             });
