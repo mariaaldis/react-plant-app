@@ -4,7 +4,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import Nav from './Components/Nav/Nav';
+import Nav from './Common/Nav/Nav';
 import './App.scss';
 
 import CreateRecipe from './Pages/CreateRecipe/CreateRecipe';

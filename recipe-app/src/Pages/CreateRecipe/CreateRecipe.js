@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import './CreateRecipe.scss';
-import Button from '../../Components/Button/Button';
-import Input from '../../Components/Input/Input';
+import Button from '../../Common/Button/Button';
+import Input from '../../Common/Input/Input';
 
 const CreateRecipe = () => {
 
