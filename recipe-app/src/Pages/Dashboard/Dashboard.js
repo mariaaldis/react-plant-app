@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Card from '../../Common/Card/Card';
 import './Dashboard.scss';
 
 const Dashboard = () => {
@@ -28,10 +29,7 @@ const Dashboard = () => {
                     <h5>See More</h5>
                 </div>
                 {!loading ? Object.keys(recipes).map((key, i) => {
-                    return <div className="card-container" key={key}>
-                            <img src={recipes[key].imageUrl}/>
-                            <h3>{recipes[key].recipeName}</h3>
-                        </div>
+                    return <Card key={key} imageUrl={recipes[key].imageUrl} recipeName={recipes[key].recipeName} />
                 }) : null}
             </div>
             
