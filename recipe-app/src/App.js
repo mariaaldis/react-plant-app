@@ -9,6 +9,7 @@ import './App.scss';
 
 import CreateRecipe from './Pages/CreateRecipe/CreateRecipe';
 import Dashboard from './Pages/Dashboard/Dashboard';
+import Recipe from './Pages/Recipe/Recipe';
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/" exact component={Dashboard}></Route>
+          <Route path="/recipe/:id" exact component={Recipe}></Route>
           <Route path="/create-recipe" component={CreateRecipe}></Route>
+          <Route path="/profile"></Route>
         </Switch>
         <Nav/>
       </Router>
