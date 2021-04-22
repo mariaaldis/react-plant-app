@@ -7,7 +7,7 @@ const Input = (props) => {
     let inputElement = null;
     const inputClasses = [];
 
-    if (!props.valid && props.touched) {
+    if (!props.valid && props.touched && props.dirty) {
         inputClasses.push('invalid');
     }
 
@@ -18,8 +18,18 @@ const Input = (props) => {
                                     placeholder={props.placeholder}
                                     label={props.label}
                                     id={props.id}
-                                    onChange={props.change} />
+                                    onChange={props.change}
+                                    onBlur={props.blur} />
             break;
+        case 'INPUT_PASSWORD':
+            inputElement = <input type="password" 
+                                className={inputClasses.join(' ')} 
+                                placeholder={props.placeholder}
+                                label={props.label}
+                                id={props.id}
+                                onChange={props.change}
+                                onBlur={props.blur} />
+        break;
         case 'INPUT_RADIO':
                 inputElement = <input type="radio" 
                                     value={props.value} 
