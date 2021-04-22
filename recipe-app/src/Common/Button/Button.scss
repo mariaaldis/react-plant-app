@@ -18,11 +18,11 @@ button {
         background: darken($main-color, 2%);
     }
     &:disabled {
-        background-color: lighten($main-color, 10%);
+        background-color: lighten($main-color, 14%);
         cursor: auto;
         &:hover {
             box-shadow: none;
-            background-color: lighten($main-color, 10%);
+            background-color: lighten($main-color, 14%);
         }
     }
 }
