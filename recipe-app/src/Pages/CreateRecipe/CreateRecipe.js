@@ -4,6 +4,7 @@ import axios from 'axios';
 import './CreateRecipe.scss';
 import Button from '../../Common/Button/Button';
 import Input from '../../Common/Input/Input';
+import { useSelector } from 'react-redux';
 
 const CreateRecipe = () => {
 
@@ -101,6 +102,8 @@ const CreateRecipe = () => {
             }
         ]
     });
+
+    const user = useSelector(state => state.currentUser);
 
     const [formValid, setFormValid] = useState(false);
 
@@ -349,7 +352,7 @@ const CreateRecipe = () => {
             instructions: instructions
         };
 
-        axios.post('https://recipe-app-341cf.firebaseio.com/recipes.json', recipe)
+        axios.post(`https://recipe-app-341cf.firebaseio.com/recipes.json?auth=${user.token}`, recipe)
             .then(response => {
                 console.log(response);
             });
