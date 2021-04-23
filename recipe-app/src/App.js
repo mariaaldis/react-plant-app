@@ -11,12 +11,14 @@ import CreateRecipe from './Pages/CreateRecipe/CreateRecipe';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import Recipe from './Pages/Recipe/Recipe';
 import Auth from './Pages/Auth/Auth';
+import UserInfo from './Pages/Auth/UserInfo';
 
 function App() {
   return (
     <div className="App">
       <Router>
       <Route path="/auth" exact component={Auth}></Route>
+      <Route path="/profile-information" exact component={UserInfo}></Route>
         <Switch>
           <Route path="/" exact component={Dashboard}></Route>
           <Route path="/recipe/:id" exact component={Recipe}></Route>
