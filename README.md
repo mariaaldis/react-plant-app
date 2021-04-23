@@ -1,1 +1,1 @@
-# react-plant-app
+# react-recipe-app
