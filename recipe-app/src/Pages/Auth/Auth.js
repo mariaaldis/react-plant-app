@@ -147,17 +147,18 @@ const Auth = () => {
         }
 
         if (isLoginPage) {      
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDP7OHDGresHTZyTMOI8DRr1eVvXViES0U', newUser)
+            axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`, newUser)
                 .then((response) => {
-                    handleAuthentication(response.data.email, response.data.localId, response.data.idToken, response.data.expiresIn)
+                    handleAuthentication(response.data.email, response.data.localId, response.data.idToken, response.data.expiresIn);
                     history.push('/');
                 })
                 .catch((error) => {
                     handleError(error.response);
                 });
         } else {
-            axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDP7OHDGresHTZyTMOI8DRr1eVvXViES0U', newUser)
+            axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`, newUser)
                 .then((response) => {
+                    handleAuthentication(response.data.email, response.data.localId, response.data.idToken, response.data.expiresIn);
                     history.push('/');
                 })
                 .catch((error) => {
@@ -182,7 +183,7 @@ const Auth = () => {
    
         // dispatch the new user as the current user
         dispatch(setCurrentUser(user));
-     }
+    }
 
     return (
         <div>
