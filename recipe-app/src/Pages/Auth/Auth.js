@@ -36,7 +36,6 @@ const Auth = () => {
     const [isLoginPage, setIsLoginPage] = useState(true);
 
     const history = useHistory();
-    const user = useSelector(state => state.currentUser);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -132,6 +131,9 @@ const Auth = () => {
             case "USER_DISABLED":
               errorMessage = "The user account has been disabled by an administrator.";
               break;
+            case "INVALID_ID_TOKEN":
+                errorMessage = "Please sign in.";
+                break;
             default: errorMessage = errorMessage;
         }
         setErrorMessage(errorMessage);
@@ -150,7 +152,6 @@ const Auth = () => {
             axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`, newUser)
                 .then((response) => {
                     handleAuthentication(response.data.email, response.data.localId, response.data.idToken, response.data.expiresIn);
-                    history.push('/');
                 })
                 .catch((error) => {
                     handleError(error.response);
@@ -159,7 +160,6 @@ const Auth = () => {
             axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`, newUser)
                 .then((response) => {
                     handleAuthentication(response.data.email, response.data.localId, response.data.idToken, response.data.expiresIn);
-                    history.push('/');
                 })
                 .catch((error) => {
                     handleError(error.response);
@@ -172,17 +172,48 @@ const Auth = () => {
          // 1. get the current date in milliseconds + milliseconds until token expires
          // 2. convert it back to a date via new Date()
         const expirationDate = new Date(new Date().getTime() + Number(expiresIn) * 1000);
-   
-        // create user
-        const user = {
-            email: email,
-            id: id,
-            token: token,
-            expirationDate: expirationDate
-        };
-   
-        // dispatch the new user as the current user
-        dispatch(setCurrentUser(user));
+        
+        if (isLoginPage) {
+            const userInfo = {
+                "idToken": token,
+                "localId": [id],
+                "email": [email]
+            }
+
+            // get account information from user (displayName + photoUrl)
+            axios.post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=${process.env.REACT_APP_API_KEY}`, userInfo)
+                .then(res => {
+                    const user = {
+                        email: email,
+                        id: id,
+                        token: token,
+                        expirationDate: expirationDate,
+                        displayName: res.data.users[0].displayName,
+                        photoUrl: res.data.users[0].photoUrl
+                    };
+
+                    // dispatch the logged in user as the current user
+                    dispatch(setCurrentUser(user));
+                    
+                    history.push('/');
+                })
+                .catch(err => {
+                    handleError(err.response);
+                });
+        } else {
+            // new user
+            const user = {
+                email: email,
+                id: id,
+                token: token,
+                expirationDate: expirationDate
+            };
+
+            // dispatch the new user as the current user
+            dispatch(setCurrentUser(user));
+
+            history.push('/profile-information');
+        }
     }
 
     return (
